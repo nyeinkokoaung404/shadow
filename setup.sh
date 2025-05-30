@@ -18,8 +18,8 @@ NC='\e[0m'
 red='\e[1;31m'
 green='\e[0;32m'
 TIMES="10"
-CHATID="5008116231"
-KEY="6638955090:AAESojtt1ZPmuTNESoNHfgyPdU92Ue7d4H4"
+CHATID="1273841502"
+KEY="7736743366:AAHdDikDRQmDAS7A0jibcetL4Df0xJkedkM"
 URL="https://api.telegram.org/bot$KEY/sendMessage"
 # ===================
 clear
@@ -122,7 +122,7 @@ mai="datediff "$Exp" "$DATE""
 Info="(${green}Active${NC})"
 Error="(${RED}ExpiRED${NC})"
 today=`date -d "0 days" +"%Y-%m-%d"`
-Exp1=$(curl https://raw.githubusercontent.com/kankaungmaung/shadow/main/izin | grep $MYIP | awk '{print $4}')
+Exp1=$(curl https://raw.githubusercontent.com/nyeinkokoaung404/shadow/main/izin | grep $MYIP | awk '{print $4}')
 if [[ $today < $Exp1 ]]; then
 sts="${Info}"
 else
@@ -249,7 +249,7 @@ function nginx_install() {
 function base_package() {
     clear
     ########
-    print_install "Menginstall Packet Yang Dibutuhkan"
+    print_install "Installing Required Packages"
     apt install zip pwgen openssl netcat socat cron bash-completion -y
     apt install figlet -y
     apt update -y
@@ -284,8 +284,8 @@ clear
     echo -e "   .----------------------------------."
 echo -e "   |\e[1;32mPlease Select a Domain Type Below \e[0m|"
 echo -e "   '----------------------------------'"
-echo -e "     \e[1;32m1)\e[0m Domain Sendiri"
-echo -e "     \e[1;32m2)\e[0m Gunakan Domain Random Khusus Digital ocean ISP LAIN ✖️ "
+echo -e "     \e[1;32m1)\e[0m Own Domain"
+echo -e "     \e[1;32m2)\e[0m Use Digital Ocean ISP's Special Random Domain ✖️ "
 echo -e "   ------------------------------------"
 read -p "   Please select numbers 1-2 or Any Button(Random) : " host
 echo ""
@@ -329,7 +329,7 @@ restart_system(){
 <b> WINGS STORE SCRIPT  </b>
 <code>────────────────────</code>
 <i>Automatic Notifications From Github</i>
-"'&reply_markup={"inline_keyboard":[[{"text":"ᴏʀᴅᴇʀ","url":"https://wa.me/6282261333421"}]]}' 
+"'&reply_markup={"inline_keyboard":[[{"text":"ᴏʀᴅᴇʀ","url":"https://t.me/nkka404"}]]}' 
 #"'&reply_markup={"inline_keyboard":[[{"text":"ᴏʀᴅᴇʀ2","url":"https://wa.me/6282261333421"}]]}'
     curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 
@@ -338,7 +338,7 @@ clear
 # Pasang SSL
 function pasang_ssl() {
 clear
-print_install "Memasang SSL Pada Domain"
+print_install "Installing SSL on a Domain"
     rm -rf /etc/xray/xray.key
     rm -rf /etc/xray/xray.crt
     domain=$(cat /root/domain)
@@ -625,7 +625,7 @@ print_success "Limit Quota Service"
 function ssh_slow(){
 clear
 # // Installing UDP Mini
-print_install "Memasang modul SlowDNS Server"
+print_install "Installing The SlowDNS Server Module"
     wget -q -O /tmp/nameserver "${REPO}limit/nameserver" >/dev/null 2>&1
     chmod +x /tmp/nameserver
     bash /tmp/nameserver | tee /root/install.log
@@ -635,7 +635,7 @@ print_install "Memasang modul SlowDNS Server"
 clear
 function ins_SSHD(){
 clear
-print_install "Memasang SSHD"
+print_install "Installing SSHD"
 wget -q -O /etc/ssh/sshd_config "${REPO}limit/sshd" >/dev/null 2>&1
 chmod 700 /etc/ssh/sshd_config
 /etc/init.d/ssh restart
@@ -647,7 +647,7 @@ print_success "SSHD"
 clear
 function ins_dropbear(){
 clear
-print_install "Menginstall Dropbear"
+print_install "Installing Dropbear"
 # // Installing Dropbear
 apt-get install dropbear -y > /dev/null 2>&1
 wget -q -O /etc/default/dropbear "${REPO}limit/dropbear.conf"
@@ -660,7 +660,7 @@ print_success "Dropbear"
 clear
 function ins_vnstat(){
 clear
-print_install "Menginstall Vnstat"
+print_install "Installing Vnstat"
 # setting vnstat
 apt -y install vnstat > /dev/null 2>&1
 /etc/init.d/vnstat restart
@@ -683,7 +683,7 @@ print_success "Vnstat"
 
 function ins_openvpn(){
 clear
-print_install "Menginstall OpenVPN"
+print_install "Installing OpenVPN"
 #OpenVPN
 wget ${REPO}limit/openvpn &&  chmod +x openvpn && ./openvpn
 /etc/init.d/openvpn restart
@@ -692,7 +692,7 @@ print_success "OpenVPN"
 
 function ins_backup(){
 clear
-print_install "Memasang Backup Server"
+print_install "Installing Backup Server"
 #BackupOption
 apt install rclone -y
 printf "q\n" | rclone config
