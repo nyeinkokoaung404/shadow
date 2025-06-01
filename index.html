@@ -48,6 +48,14 @@
             margin-bottom: 30px;
             padding-bottom: 15px;
             border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
         h1 {
@@ -55,7 +63,7 @@
             margin: 0;
         }
 
-        .theme-toggle {
+        .theme-toggle, .lang-toggle {
             background: var(--secondary-color);
             border: none;
             padding: 8px 15px;
@@ -66,6 +74,11 @@
             gap: 8px;
             color: var(--text-color);
             font-weight: 600;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 10px;
         }
 
         .card {
@@ -141,9 +154,23 @@
             margin-right: 5px;
         }
 
+        .hidden {
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .grid {
                 grid-template-columns: 1fr;
+            }
+            
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
             }
         }
     </style>
@@ -151,89 +178,181 @@
 <body>
     <div class="container">
         <header>
-            <h1>VPN Setup Script</h1>
-            <button class="theme-toggle" id="themeToggle">
-                <span id="themeIcon">🌙</span> <span id="themeText">Dark Mode</span>
-            </button>
+            <div class="header-left">
+                <h1 id="title">VPN Setup Script</h1>
+            </div>
+            <div class="header-right">
+                <button class="lang-toggle" id="langToggle">
+                    <span id="langIcon">🌐</span> <span id="langText">မြန်မာ</span>
+                </button>
+                <button class="theme-toggle" id="themeToggle">
+                    <span id="themeIcon">🌙</span> <span id="themeText">Dark Mode</span>
+                </button>
+            </div>
         </header>
 
-        <div class="card">
-            <h2>Installation Script</h2>
-            <div class="code-container">
-                <button class="copy-btn" onclick="copyToClipboard('installScript')">Copy</button>
-                <pre id="installScript"><code>apt install -y && apt update -y && apt upgrade -y && apt install lolcat -y && gem install lolcat && wget -q https://raw.githubusercontent.com/nyeinkokoaung404/shadow/main/setup.sh && chmod +x setup.sh && ./setup.sh</code></pre>
+        <!-- English Content -->
+        <div id="en-content">
+            <div class="card">
+                <h2>Installation Script</h2>
+                <div class="code-container">
+                    <button class="copy-btn" onclick="copyToClipboard('installScript')">Copy</button>
+                    <pre id="installScript"><code>apt install -y && apt update -y && apt upgrade -y && apt install lolcat -y && gem install lolcat && wget -q https://raw.githubusercontent.com/nyeinkokoaung404/shadow/main/setup.sh && chmod +x setup.sh && ./setup.sh</code></pre>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Update Menu</h2>
+                <div class="code-container">
+                    <button class="copy-btn" onclick="copyToClipboard('updateScript')">Copy</button>
+                    <pre id="updateScript"><code>wget https://raw.githubusercontent.com/nyeinkokoaung404/shadow/main/update.sh && chmod +x update.sh && ./update.sh</code></pre>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Tested On OS</h2>
+                <ul>
+                    <li>UBUNTU 20.04.05</li>
+                    <li>DEBIAN 10</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>Additional Features</h2>
+                <ul>
+                    <li>Add 1GiB Swap</li>
+                    <li>Dynamic installation</li>
+                    <li>Server profile tuning</li>
+                    <li>Xray Core</li>
+                    <li>Fail2ban integration</li>
+                    <li>Auto block some Indonesian ads by default</li>
+                    <li>Auto clear logs every 3 minutes</li>
+                    <li>Auto delete expired accounts</li>
+                    <li>User account details</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>Port Information</h2>
+                <div class="grid">
+                    <div>
+                        <p><span class="badge">TCP</span> TROJAN WS <strong>443</strong></p>
+                        <p><span class="badge">gRPC</span> TROJAN GRPC <strong>443</strong></p>
+                        <p><span class="badge">TCP</span> SHADOWSOCKS WS <strong>443</strong></p>
+                        <p><span class="badge">gRPC</span> SHADOWSOCKS GRPC <strong>443</strong></p>
+                    </div>
+                    <div>
+                        <p><span class="badge">TCP</span> VLESS WS <strong>443</strong></p>
+                        <p><span class="badge">gRPC</span> VLESS GRPC <strong>443</strong></p>
+                        <p><span class="badge">TCP</span> VLESS NONTLS <strong>80</strong></p>
+                    </div>
+                    <div>
+                        <p><span class="badge">TCP</span> VMESS WS <strong>443</strong></p>
+                        <p><span class="badge">gRPC</span> VMESS GRPC <strong>443</strong></p>
+                        <p><span class="badge">TCP</span> VMESS NONTLS <strong>80</strong></p>
+                    </div>
+                    <div>
+                        <p><span class="badge">TCP</span> SSH WS / TLS <strong>443</strong></p>
+                        <p><span class="badge">TCP</span> SSH NON TLS <strong>8880</strong></p>
+                        <p><span class="badge">UDP</span> OVPN SSL/TCP <strong>1194</strong></p>
+                        <p><span class="badge">UDP</span> SLOWDNS <strong>5300</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Cloudflare Settings</h2>
+                <ul>
+                    <li>SSL/TLS : FULL</li>
+                    <li>SSL/TLS Recommender : OFF</li>
+                    <li>GRPC : ON</li>
+                    <li>WEBSOCKET : ON</li>
+                    <li>Always Use HTTPS : OFF</li>
+                    <li>UNDER ATTACK MODE : OFF</li>
+                </ul>
             </div>
         </div>
 
-        <div class="card">
-            <h2>Update Menu</h2>
-            <div class="code-container">
-                <button class="copy-btn" onclick="copyToClipboard('updateScript')">Copy</button>
-                <pre id="updateScript"><code>wget https://raw.githubusercontent.com/nyeinkokoaung404/shadow/main/update.sh && chmod +x update.sh && ./update.sh</code></pre>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>Tested On OS</h2>
-            <ul>
-                <li>UBUNTU 20.04.05</li>
-                <li>DEBIAN 10</li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h2>Additional Features</h2>
-            <ul>
-                <li>Tambah Swap 1GiB</li>
-                <li>Pemasangan yang dinamis</li>
-                <li>Tuning profile pada server</li>
-                <li>Xray Core</li>
-                <li>Penambahan fail2ban</li>
-                <li>Auto block sebagian ads indo by default</li>
-                <li>Auto clear log per 3 menit</li>
-                <li>Auto deler expired</li>
-                <li>User Details Akun</li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h2>Port Information</h2>
-            <div class="grid">
-                <div>
-                    <p><span class="badge">TCP</span> TROJAN WS <strong>443</strong></p>
-                    <p><span class="badge">gRPC</span> TROJAN GRPC <strong>443</strong></p>
-                    <p><span class="badge">TCP</span> SHADOWSOCKS WS <strong>443</strong></p>
-                    <p><span class="badge">gRPC</span> SHADOWSOCKS GRPC <strong>443</strong></p>
-                </div>
-                <div>
-                    <p><span class="badge">TCP</span> VLESS WS <strong>443</strong></p>
-                    <p><span class="badge">gRPC</span> VLESS GRPC <strong>443</strong></p>
-                    <p><span class="badge">TCP</span> VLESS NONTLS <strong>80</strong></p>
-                </div>
-                <div>
-                    <p><span class="badge">TCP</span> VMESS WS <strong>443</strong></p>
-                    <p><span class="badge">gRPC</span> VMESS GRPC <strong>443</strong></p>
-                    <p><span class="badge">TCP</span> VMESS NONTLS <strong>80</strong></p>
-                </div>
-                <div>
-                    <p><span class="badge">TCP</span> SSH WS / TLS <strong>443</strong></p>
-                    <p><span class="badge">TCP</span> SSH NON TLS <strong>8880</strong></p>
-                    <p><span class="badge">UDP</span> OVPN SSL/TCP <strong>1194</strong></p>
-                    <p><span class="badge">UDP</span> SLOWDNS <strong>5300</strong></p>
+        <!-- Myanmar Content -->
+        <div id="mm-content" class="hidden">
+            <div class="card">
+                <h2>တပ်ဆင်ရန် Script</h2>
+                <div class="code-container">
+                    <button class="copy-btn" onclick="copyToClipboard('installScript')">ကူးယူရန်</button>
+                    <pre id="installScript"><code>apt install -y && apt update -y && apt upgrade -y && apt install lolcat -y && gem install lolcat && wget -q https://raw.githubusercontent.com/nyeinkokoaung404/shadow/main/setup.sh && chmod +x setup.sh && ./setup.sh</code></pre>
                 </div>
             </div>
-        </div>
 
-        <div class="card">
-            <h2>Cloudflare Settings</h2>
-            <ul>
-                <li>SSL/TLS : FULL</li>
-                <li>SSL/TLS Recommender : OFF</li>
-                <li>GRPC : ON</li>
-                <li>WEBSOCKET : ON</li>
-                <li>Always Use HTTPS : OFF</li>
-                <li>UNDER ATTACK MODE : OFF</li>
-            </ul>
+            <div class="card">
+                <h2>Update Menu</h2>
+                <div class="code-container">
+                    <button class="copy-btn" onclick="copyToClipboard('updateScript')">ကူးယူရန်</button>
+                    <pre id="updateScript"><code>wget https://raw.githubusercontent.com/nyeinkokoaung404/shadow/main/update.sh && chmod +x update.sh && ./update.sh</code></pre>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>စမ်းသပ်ပြီး OS များ</h2>
+                <ul>
+                    <li>UBUNTU 20.04.05</li>
+                    <li>DEBIAN 10</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>အပိုပါဝင်သည့်အရာများ</h2>
+                <ul>
+                    <li>Swap 1GiB ထည့်ခြင်း</li>
+                    <li>ဒိုင်းနမစ်တပ်ဆင်နည်း</li>
+                    <li>ဆာဗာပရိုဖိုင်းညှိခြင်း</li>
+                    <li>Xray Core</li>
+                    <li>Fail2ban ထည့်သွင်းခြင်း</li>
+                    <li>အင်ဒိုနီးရှားကြော်ငြာအချို့ကိုအလိုအလျောက်ပိတ်ခြင်း</li>
+                    <li>၃မိနစ်တစ်ခါ log အလိုအလျောက်ရှင်းခြင်း</li>
+                    <li>သက်တမ်းကုန်သွားသော account အလိုအလျောက်ဖျက်ခြင်း</li>
+                    <li>အသုံးပြုသူအကောင့်အသေးစိတ်</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>Port အချက်အလက်</h2>
+                <div class="grid">
+                    <div>
+                        <p><span class="badge">TCP</span> TROJAN WS <strong>443</strong></p>
+                        <p><span class="badge">gRPC</span> TROJAN GRPC <strong>443</strong></p>
+                        <p><span class="badge">TCP</span> SHADOWSOCKS WS <strong>443</strong></p>
+                        <p><span class="badge">gRPC</span> SHADOWSOCKS GRPC <strong>443</strong></p>
+                    </div>
+                    <div>
+                        <p><span class="badge">TCP</span> VLESS WS <strong>443</strong></p>
+                        <p><span class="badge">gRPC</span> VLESS GRPC <strong>443</strong></p>
+                        <p><span class="badge">TCP</span> VLESS NONTLS <strong>80</strong></p>
+                    </div>
+                    <div>
+                        <p><span class="badge">TCP</span> VMESS WS <strong>443</strong></p>
+                        <p><span class="badge">gRPC</span> VMESS GRPC <strong>443</strong></p>
+                        <p><span class="badge">TCP</span> VMESS NONTLS <strong>80</strong></p>
+                    </div>
+                    <div>
+                        <p><span class="badge">TCP</span> SSH WS / TLS <strong>443</strong></p>
+                        <p><span class="badge">TCP</span> SSH NON TLS <strong>8880</strong></p>
+                        <p><span class="badge">UDP</span> OVPN SSL/TCP <strong>1194</strong></p>
+                        <p><span class="badge">UDP</span> SLOWDNS <strong>5300</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Cloudflare ချိန်ညှိချက်များ</h2>
+                <ul>
+                    <li>SSL/TLS : FULL</li>
+                    <li>SSL/TLS Recommender : OFF</li>
+                    <li>GRPC : ON</li>
+                    <li>WEBSOCKET : ON</li>
+                    <li>Always Use HTTPS : OFF</li>
+                    <li>UNDER ATTACK MODE : OFF</li>
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -243,6 +362,14 @@
         const themeIcon = document.getElementById('themeIcon');
         const themeText = document.getElementById('themeText');
         const html = document.documentElement;
+
+        // Language toggle functionality
+        const langToggle = document.getElementById('langToggle');
+        const langIcon = document.getElementById('langIcon');
+        const langText = document.getElementById('langText');
+        const title = document.getElementById('title');
+        const enContent = document.getElementById('en-content');
+        const mmContent = document.getElementById('mm-content');
 
         // Check for saved theme preference or use preferred color scheme
         const savedTheme = localStorage.getItem('theme') || 
@@ -255,6 +382,17 @@
             themeText.textContent = 'Light Mode';
         }
 
+        // Check for saved language preference
+        const savedLang = localStorage.getItem('language') || 'en';
+        
+        // Apply the saved language
+        if (savedLang === 'mm') {
+            enContent.classList.add('hidden');
+            mmContent.classList.remove('hidden');
+            langText.textContent = 'English';
+            title.textContent = 'VPN တပ်ဆင်ရန် Script';
+        }
+
         // Toggle theme
         themeToggle.addEventListener('click', () => {
             const currentTheme = html.getAttribute('data-theme');
@@ -262,14 +400,38 @@
             if (currentTheme === 'dark') {
                 html.removeAttribute('data-theme');
                 themeIcon.textContent = '🌙';
-                themeText.textContent = 'Dark Mode';
+                themeText.textContent = savedLang === 'mm' ? 'အမှောင်မှု' : 'Dark Mode';
                 localStorage.setItem('theme', 'light');
             } else {
                 html.setAttribute('data-theme', 'dark');
                 themeIcon.textContent = '☀️';
-                themeText.textContent = 'Light Mode';
+                themeText.textContent = savedLang === 'mm' ? 'အလင်းမှု' : 'Light Mode';
                 localStorage.setItem('theme', 'dark');
             }
+        });
+
+        // Toggle language
+        langToggle.addEventListener('click', () => {
+            if (enContent.classList.contains('hidden')) {
+                // Switch to English
+                enContent.classList.remove('hidden');
+                mmContent.classList.add('hidden');
+                langText.textContent = 'မြန်မာ';
+                title.textContent = 'VPN Setup Script';
+                themeText.textContent = html.getAttribute('data-theme') === 'dark' ? 'Light Mode' : 'Dark Mode';
+                localStorage.setItem('language', 'en');
+            } else {
+                // Switch to Myanmar
+                enContent.classList.add('hidden');
+                mmContent.classList.remove('hidden');
+                langText.textContent = 'English';
+                title.textContent = 'VPN တပ်ဆင်ရန် Script';
+                themeText.textContent = html.getAttribute('data-theme') === 'dark' ? 'အလင်းမှု' : 'အမှောင်မှု';
+                localStorage.setItem('language', 'mm');
+            }
+            
+            // Update all copy buttons text
+            updateCopyButtonsText();
         });
 
         // Copy to clipboard function
@@ -281,15 +443,23 @@
                 // Change button style temporarily
                 const copyBtn = event.target;
                 copyBtn.classList.add('copied');
-                copyBtn.textContent = 'Copied!';
+                copyBtn.textContent = savedLang === 'mm' ? 'ကူးပြီး!' : 'Copied!';
                 
                 setTimeout(() => {
                     copyBtn.classList.remove('copied');
-                    copyBtn.textContent = 'Copy';
+                    copyBtn.textContent = savedLang === 'mm' ? 'ကူးယူရန်' : 'Copy';
                 }, 2000);
             }).catch(err => {
                 console.error('Failed to copy text: ', err);
-                alert('Failed to copy text. Please try again.');
+                alert(savedLang === 'mm' ? 'ကူးယူရန်မအောင်မြင်ပါ။ ထပ်ကြိုးစားပါ။' : 'Failed to copy text. Please try again.');
+            });
+        }
+
+        // Update all copy buttons text based on current language
+        function updateCopyButtonsText() {
+            const copyButtons = document.querySelectorAll('.copy-btn');
+            copyButtons.forEach(btn => {
+                btn.textContent = savedLang === 'mm' ? 'ကူးယူရန်' : 'Copy';
             });
         }
 
@@ -305,7 +475,7 @@
                     
                     const copyBtn = document.createElement('button');
                     copyBtn.className = 'copy-btn';
-                    copyBtn.textContent = 'Copy';
+                    copyBtn.textContent = savedLang === 'mm' ? 'ကူးယူရန်' : 'Copy';
                     copyBtn.onclick = function() {
                         copyToClipboard(randomId);
                     };
