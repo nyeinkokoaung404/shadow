@@ -12,6 +12,7 @@
             --secondary-color: #f0f0f0;
             --card-bg: #f8f9fa;
             --border-color: #dee2e6;
+            --success-color: #28a745;
         }
 
         [data-theme="dark"] {
@@ -21,6 +22,7 @@
             --secondary-color: #2d2d2d;
             --card-bg: #2a2a2a;
             --border-color: #444444;
+            --success-color: #3ddb6f;
         }
 
         body {
@@ -72,6 +74,7 @@
             padding: 20px;
             margin-bottom: 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
         }
 
         .card h2 {
@@ -81,6 +84,10 @@
             padding-bottom: 10px;
         }
 
+        .code-container {
+            position: relative;
+        }
+
         pre {
             background-color: var(--secondary-color);
             padding: 15px;
@@ -88,11 +95,34 @@
             overflow-x: auto;
             white-space: pre-wrap;
             word-wrap: break-word;
+            margin: 0;
         }
 
         code {
             font-family: 'Courier New', Courier, monospace;
             color: var(--text-color);
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            opacity: 0.9;
+        }
+
+        .copy-btn.copied {
+            background-color: var(--success-color);
         }
 
         .grid {
@@ -129,12 +159,18 @@
 
         <div class="card">
             <h2>Installation Script</h2>
-            <pre><code>apt install -y && apt update -y && apt upgrade -y && apt install lolcat -y && gem install lolcat && wget -q https://raw.githubusercontent.com/nyeinkokoaung404/shadow/main/setup.sh && chmod +x setup.sh && ./setup.sh</code></pre>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyToClipboard('installScript')">Copy</button>
+                <pre id="installScript"><code>apt install -y && apt update -y && apt upgrade -y && apt install lolcat -y && gem install lolcat && wget -q https://raw.githubusercontent.com/nyeinkokoaung404/shadow/main/setup.sh && chmod +x setup.sh && ./setup.sh</code></pre>
+            </div>
         </div>
 
         <div class="card">
             <h2>Update Menu</h2>
-            <pre><code>wget https://raw.githubusercontent.com/nyeinkokoaung404/shadow/main/update.sh && chmod +x update.sh && ./update.sh</code></pre>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyToClipboard('updateScript')">Copy</button>
+                <pre id="updateScript"><code>wget https://raw.githubusercontent.com/nyeinkokoaung404/shadow/main/update.sh && chmod +x update.sh && ./update.sh</code></pre>
+            </div>
         </div>
 
         <div class="card">
@@ -202,6 +238,7 @@
     </div>
 
     <script>
+        // Theme toggle functionality
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = document.getElementById('themeIcon');
         const themeText = document.getElementById('themeText');
@@ -232,6 +269,49 @@
                 themeIcon.textContent = '☀️';
                 themeText.textContent = 'Light Mode';
                 localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Copy to clipboard function
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const textToCopy = element.textContent || element.innerText;
+            
+            navigator.clipboard.writeText(textToCopy.trim()).then(() => {
+                // Change button style temporarily
+                const copyBtn = event.target;
+                copyBtn.classList.add('copied');
+                copyBtn.textContent = 'Copied!';
+                
+                setTimeout(() => {
+                    copyBtn.classList.remove('copied');
+                    copyBtn.textContent = 'Copy';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                alert('Failed to copy text. Please try again.');
+            });
+        }
+
+        // Add copy buttons to all code blocks
+        document.querySelectorAll('pre').forEach((preElement) => {
+            if (!preElement.id) {
+                const randomId = 'code-' + Math.random().toString(36).substr(2, 9);
+                preElement.id = randomId;
+                
+                const codeContainer = preElement.parentElement;
+                if (!codeContainer.classList.contains('code-container')) {
+                    codeContainer.classList.add('code-container');
+                    
+                    const copyBtn = document.createElement('button');
+                    copyBtn.className = 'copy-btn';
+                    copyBtn.textContent = 'Copy';
+                    copyBtn.onclick = function() {
+                        copyToClipboard(randomId);
+                    };
+                    
+                    codeContainer.insertBefore(copyBtn, preElement);
+                }
             }
         });
     </script>
