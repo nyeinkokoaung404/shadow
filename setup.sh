@@ -463,7 +463,7 @@ print_success "Packet Configuration"
 
 function ssh(){
 clear
-print_install "Memasang Password SSH"
+print_install "Setting SSH Password"
     wget -O /etc/pam.d/common-password "${REPO}limit/password"
 chmod +x /etc/pam.d/common-password
 
