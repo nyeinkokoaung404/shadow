@@ -18,15 +18,15 @@ wget https://raw.githubusercontent.com/nyeinkokoaung404/shadow/main/update.sh &&
 - DEBIAN 10
 
 ### FITUR TAMBAHAN
-- Tambah Swap 1GiB
-- Pemasangan yang dinamis
-- Tuning profile pada server
+- Add 1GiB Swap
+- Dynamic installation
+- Tuning profile on server
 - Xray Core
-- Penambahan fail2ban
-- Auto block sebagian ads indo by default
-- Auto clear log per 3 menit
+- Addition of fail2ban
+- Auto block some Indonesian ads by default
+- Auto clear log every 3 minutes
 - Auto deler expired
-- User Details Akun
+- User Account Details
 
 ### PORT INFO
 ```
